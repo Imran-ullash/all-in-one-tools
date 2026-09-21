@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import DatePicker from '@/components/ui/DatePicker';
 
 export default function DateCalculator() {
   const [mode, setMode] = useState<'diff' | 'add'>('diff');
@@ -18,57 +19,55 @@ export default function DateCalculator() {
   const [opYears, setOpYears] = useState(0);
 
   // Calculations for Mode 1
-  let totalDays = 0;
-  let weeks = 0;
-  let remDays = 0;
+  const dStart = new Date(startDate);
+  const dEnd = new Date(endDate);
+  const diffMs = dEnd.getTime() - dStart.getTime();
+  const totalDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+  const weeks = Math.floor(Math.abs(totalDays) / 7);
+  const remDays = Math.abs(totalDays) % 7;
+
+  // Working days count
   let businessDays = 0;
-
-  if (startDate && endDate) {
-    const start = new Date(startDate + 'T00:00:00');
-    const end = new Date(endDate + 'T00:00:00');
-    const isNegative = end < start;
-    const earlier = isNegative ? end : start;
-    const later = isNegative ? start : end;
-
-    const diffMs = later.getTime() - earlier.getTime();
-    totalDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
-    weeks = Math.floor(totalDays / 7);
-    remDays = totalDays % 7;
-
-    const cur = new Date(earlier);
-    while (cur < later) {
-      const day = cur.getDay();
-      if (day !== 0 && day !== 6) {
-        businessDays++;
-      }
+  if (!isNaN(diffMs) && dStart <= dEnd) {
+    const cur = new Date(dStart);
+    while (cur < dEnd) {
       cur.setDate(cur.getDate() + 1);
+      const day = cur.getDay();
+      if (day !== 0 && day !== 6) businessDays++;
     }
   }
 
   // Calculations for Mode 2
-  let targetDateFormatted = '--';
-  if (baseDate) {
-    const base = new Date(baseDate + 'T00:00:00');
-    const sign = operation === 'add' ? 1 : -1;
-    const target = new Date(base);
-    target.setFullYear(target.getFullYear() + sign * opYears);
-    target.setMonth(target.getMonth() + sign * opMonths);
-    target.setDate(target.getDate() + sign * (opDays + opWeeks * 7));
+  const calcResultDate = () => {
+    const d = new Date(baseDate);
+    if (isNaN(d.getTime())) return 'Invalid Date';
 
-    const options: Intl.DateTimeFormatOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    targetDateFormatted = target.toLocaleDateString('en-US', options);
-  }
+    const mult = operation === 'add' ? 1 : -1;
+    d.setFullYear(d.getFullYear() + mult * (opYears || 0));
+    d.setMonth(d.getMonth() + mult * (opMonths || 0));
+    d.setDate(d.getDate() + mult * ((opWeeks || 0) * 7 + (opDays || 0)));
+
+    return d.toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  const targetDateFormatted = calcResultDate();
 
   return (
     <div>
-      <div className="form-group" style={{ maxWidth: '400px', marginBottom: '1.75rem' }}>
+      {/* Mode Selector */}
+      <div style={{ marginBottom: '1.75rem', display: 'flex', justifyContent: 'center' }}>
         <div className="segmented-control">
           <button
             type="button"
             className={`segmented-btn ${mode === 'diff' ? 'active' : ''}`}
             onClick={() => setMode('diff')}
           >
-            Days Between Dates
+            Difference Between Dates
           </button>
           <button
             type="button"
@@ -84,23 +83,27 @@ export default function DateCalculator() {
         <div className="tool-grid-2col">
           <div>
             <div className="form-group">
-              <label htmlFor="dateStart" className="form-label">Start Date</label>
-              <input
-                type="date"
+              <label htmlFor="dateStart" className="form-label">
+                <span>Start Date</span>
+                <span className="form-label-hint">Click to pick date</span>
+              </label>
+              <DatePicker
                 id="dateStart"
-                className="form-input"
                 value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
+                onChange={setStartDate}
+                placeholder="Select start date"
               />
             </div>
             <div className="form-group">
-              <label htmlFor="dateEnd" className="form-label">End Date</label>
-              <input
-                type="date"
+              <label htmlFor="dateEnd" className="form-label">
+                <span>End Date</span>
+                <span className="form-label-hint">Click to pick date</span>
+              </label>
+              <DatePicker
                 id="dateEnd"
-                className="form-input"
                 value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
+                onChange={setEndDate}
+                placeholder="Select end date"
               />
             </div>
           </div>
@@ -129,13 +132,15 @@ export default function DateCalculator() {
         <div className="tool-grid-2col">
           <div>
             <div className="form-group">
-              <label htmlFor="dateBase" className="form-label">Starting Date</label>
-              <input
-                type="date"
+              <label htmlFor="dateBase" className="form-label">
+                <span>Starting Date</span>
+                <span className="form-label-hint">Click to pick date</span>
+              </label>
+              <DatePicker
                 id="dateBase"
-                className="form-input"
                 value={baseDate}
-                onChange={(e) => setBaseDate(e.target.value)}
+                onChange={setBaseDate}
+                placeholder="Select starting date"
               />
             </div>
             <div className="form-group">

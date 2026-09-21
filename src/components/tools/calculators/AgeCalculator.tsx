@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useToast } from '@/components/ui/Toast';
+import DatePicker from '@/components/ui/DatePicker';
 
 export default function AgeCalculator() {
   const { showToast } = useToast();
@@ -92,26 +93,28 @@ export default function AgeCalculator() {
     <div className="tool-grid-2col">
       <div>
         <div className="form-group">
-          <label htmlFor="dobInput" className="form-label">Date of Birth</label>
-          <input
-            type="date"
+          <label htmlFor="dobInput" className="form-label">
+            <span>Date of Birth</span>
+            <span className="form-label-hint">Click to pick date</span>
+          </label>
+          <DatePicker
             id="dobInput"
-            className="form-input"
             value={dob}
-            onChange={(e) => setDob(e.target.value)}
-            required
+            onChange={setDob}
+            placeholder="Select birth date"
+            max={targetDate || undefined}
           />
         </div>
         <div className="form-group">
           <label htmlFor="targetDateInput" className="form-label">
-            Age at the Date of <span className="form-label-hint">(Defaults to Today)</span>
+            <span>Age at the Date of</span>
+            <span className="form-label-hint">(Defaults to Today)</span>
           </label>
-          <input
-            type="date"
+          <DatePicker
             id="targetDateInput"
-            className="form-input"
             value={targetDate}
-            onChange={(e) => setTargetDate(e.target.value)}
+            onChange={setTargetDate}
+            placeholder="Select target date"
           />
         </div>
 
