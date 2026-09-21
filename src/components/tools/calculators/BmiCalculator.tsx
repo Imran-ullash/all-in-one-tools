@@ -40,6 +40,41 @@ export default function BmiCalculator() {
     setUnit(newUnit);
   };
 
+  // Stepper handlers for smooth increment/decrement
+  const stepHeightCm = (delta: number) => {
+    setHeightCm((prev) => Math.min(260, Math.max(50, Math.round((prev + delta) * 10) / 10)));
+  };
+
+  const stepWeightKg = (delta: number) => {
+    setWeightKg((prev) => Math.min(300, Math.max(20, Math.round((prev + delta) * 10) / 10)));
+  };
+
+  const stepHeightFt = (delta: number) => {
+    setHeightFt((prev) => Math.min(8, Math.max(1, prev + delta)));
+  };
+
+  const stepHeightIn = (delta: number) => {
+    setHeightIn((prev) => {
+      const next = prev + delta;
+      if (next > 11) {
+        setHeightFt((f) => Math.min(8, f + 1));
+        return 0;
+      }
+      if (next < 0) {
+        if (heightFt > 1) {
+          setHeightFt((f) => f - 1);
+          return 11;
+        }
+        return 0;
+      }
+      return next;
+    });
+  };
+
+  const stepWeightLbs = (delta: number) => {
+    setWeightLbs((prev) => Math.min(600, Math.max(40, Math.round((prev + delta) * 10) / 10)));
+  };
+
   // Compute BMI
   let heightM = 0;
   let weight = 0;
@@ -118,8 +153,17 @@ export default function BmiCalculator() {
             <div className="form-group">
               <label htmlFor="bmiHeightCm" className="form-label">
                 <span>Height</span>
-                <span style={{ color: 'var(--accent-primary)', fontWeight: 600 }}>{heightCm} cm</span>
+                <button
+                  type="button"
+                  className="label-unit-toggle"
+                  onClick={() => handleUnitChange('imperial')}
+                  title="Click to switch to ft and in"
+                >
+                  <span style={{ color: 'var(--accent-primary)', fontWeight: 600 }}>{heightCm} cm</span>
+                  <span className="label-toggle-hint">⇄ switch to ft/in</span>
+                </button>
               </label>
+
               <div className="input-with-affix">
                 <input
                   type="number"
@@ -131,8 +175,45 @@ export default function BmiCalculator() {
                   max="260"
                   step="0.5"
                 />
-                <span className="input-affix">cm</span>
+
+                {/* Custom Website-Styled Up/Down Stepper Buttons */}
+                <div className="stepper-controls">
+                  <button
+                    type="button"
+                    className="stepper-btn"
+                    onClick={() => stepHeightCm(1)}
+                    aria-label="Increase height by 1 cm"
+                    title="Increase 1 cm"
+                  >
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                      <polyline points="18 15 12 9 6 15"></polyline>
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    className="stepper-btn"
+                    onClick={() => stepHeightCm(-1)}
+                    aria-label="Decrease height by 1 cm"
+                    title="Decrease 1 cm"
+                  >
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+                </div>
+
+                {/* Clickable Unit Badge */}
+                <button
+                  type="button"
+                  className="unit-badge-btn"
+                  onClick={() => handleUnitChange('imperial')}
+                  title="Click to switch unit to Imperial (ft, in)"
+                >
+                  <span>cm</span>
+                  <span className="switch-indicator">⇄ ft</span>
+                </button>
               </div>
+
               <input
                 type="range"
                 min="100"
@@ -146,8 +227,17 @@ export default function BmiCalculator() {
             <div className="form-group">
               <label htmlFor="bmiWeightKg" className="form-label">
                 <span>Weight</span>
-                <span style={{ color: 'var(--accent-primary)', fontWeight: 600 }}>{weightKg} kg</span>
+                <button
+                  type="button"
+                  className="label-unit-toggle"
+                  onClick={() => handleUnitChange('imperial')}
+                  title="Click to switch to lbs"
+                >
+                  <span style={{ color: 'var(--accent-primary)', fontWeight: 600 }}>{weightKg} kg</span>
+                  <span className="label-toggle-hint">⇄ switch to lbs</span>
+                </button>
               </label>
+
               <div className="input-with-affix">
                 <input
                   type="number"
@@ -159,8 +249,45 @@ export default function BmiCalculator() {
                   max="300"
                   step="0.1"
                 />
-                <span className="input-affix">kg</span>
+
+                {/* Custom Stepper Buttons */}
+                <div className="stepper-controls">
+                  <button
+                    type="button"
+                    className="stepper-btn"
+                    onClick={() => stepWeightKg(0.5)}
+                    aria-label="Increase weight by 0.5 kg"
+                    title="Increase 0.5 kg"
+                  >
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                      <polyline points="18 15 12 9 6 15"></polyline>
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    className="stepper-btn"
+                    onClick={() => stepWeightKg(-0.5)}
+                    aria-label="Decrease weight by 0.5 kg"
+                    title="Decrease 0.5 kg"
+                  >
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+                </div>
+
+                {/* Clickable Unit Badge */}
+                <button
+                  type="button"
+                  className="unit-badge-btn"
+                  onClick={() => handleUnitChange('imperial')}
+                  title="Click to switch unit to Imperial (lbs)"
+                >
+                  <span>kg</span>
+                  <span className="switch-indicator">⇄ lbs</span>
+                </button>
               </div>
+
               <input
                 type="range"
                 min="30"
@@ -176,9 +303,19 @@ export default function BmiCalculator() {
             <div className="form-group">
               <label className="form-label">
                 <span>Height</span>
-                <span style={{ color: 'var(--accent-primary)', fontWeight: 600 }}>{heightFt} ft {heightIn} in</span>
+                <button
+                  type="button"
+                  className="label-unit-toggle"
+                  onClick={() => handleUnitChange('metric')}
+                  title="Click to switch to cm"
+                >
+                  <span style={{ color: 'var(--accent-primary)', fontWeight: 600 }}>{heightFt} ft {heightIn} in</span>
+                  <span className="label-toggle-hint">⇄ switch to cm</span>
+                </button>
               </label>
+
               <div style={{ display: 'flex', gap: '0.75rem' }}>
+                {/* Feet Input */}
                 <div className="input-with-affix" style={{ flex: 1 }}>
                   <input
                     type="number"
@@ -188,8 +325,46 @@ export default function BmiCalculator() {
                     min="1"
                     max="8"
                   />
-                  <span className="input-affix">ft</span>
+
+                  {/* Feet Stepper */}
+                  <div className="stepper-controls">
+                    <button
+                      type="button"
+                      className="stepper-btn"
+                      onClick={() => stepHeightFt(1)}
+                      aria-label="Increase feet"
+                      title="Increase 1 ft"
+                    >
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                        <polyline points="18 15 12 9 6 15"></polyline>
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      className="stepper-btn"
+                      onClick={() => stepHeightFt(-1)}
+                      aria-label="Decrease feet"
+                      title="Decrease 1 ft"
+                    >
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Clickable ft badge */}
+                  <button
+                    type="button"
+                    className="unit-badge-btn"
+                    onClick={() => handleUnitChange('metric')}
+                    title="Click to switch unit to Metric (cm)"
+                  >
+                    <span>ft</span>
+                    <span className="switch-indicator">⇄ cm</span>
+                  </button>
                 </div>
+
+                {/* Inches Input */}
                 <div className="input-with-affix" style={{ flex: 1 }}>
                   <input
                     type="number"
@@ -199,9 +374,37 @@ export default function BmiCalculator() {
                     min="0"
                     max="11"
                   />
-                  <span className="input-affix">in</span>
+
+                  {/* Inches Stepper */}
+                  <div className="stepper-controls" style={{ right: '2.5rem' }}>
+                    <button
+                      type="button"
+                      className="stepper-btn"
+                      onClick={() => stepHeightIn(1)}
+                      aria-label="Increase inches"
+                      title="Increase 1 in"
+                    >
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                        <polyline points="18 15 12 9 6 15"></polyline>
+                      </svg>
+                    </button>
+                    <button
+                      type="button"
+                      className="stepper-btn"
+                      onClick={() => stepHeightIn(-1)}
+                      aria-label="Decrease inches"
+                      title="Decrease 1 in"
+                    >
+                      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <span className="input-affix" style={{ right: '0.8rem', pointerEvents: 'none' }}>in</span>
                 </div>
               </div>
+
               <input
                 type="range"
                 min="12"
@@ -219,8 +422,17 @@ export default function BmiCalculator() {
             <div className="form-group">
               <label htmlFor="bmiWeightLbs" className="form-label">
                 <span>Weight</span>
-                <span style={{ color: 'var(--accent-primary)', fontWeight: 600 }}>{weightLbs} lbs</span>
+                <button
+                  type="button"
+                  className="label-unit-toggle"
+                  onClick={() => handleUnitChange('metric')}
+                  title="Click to switch to kg"
+                >
+                  <span style={{ color: 'var(--accent-primary)', fontWeight: 600 }}>{weightLbs} lbs</span>
+                  <span className="label-toggle-hint">⇄ switch to kg</span>
+                </button>
               </label>
+
               <div className="input-with-affix">
                 <input
                   type="number"
@@ -232,8 +444,45 @@ export default function BmiCalculator() {
                   max="600"
                   step="0.5"
                 />
-                <span className="input-affix">lbs</span>
+
+                {/* Custom Stepper Buttons */}
+                <div className="stepper-controls">
+                  <button
+                    type="button"
+                    className="stepper-btn"
+                    onClick={() => stepWeightLbs(1)}
+                    aria-label="Increase weight by 1 lb"
+                    title="Increase 1 lb"
+                  >
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                      <polyline points="18 15 12 9 6 15"></polyline>
+                    </svg>
+                  </button>
+                  <button
+                    type="button"
+                    className="stepper-btn"
+                    onClick={() => stepWeightLbs(-1)}
+                    aria-label="Decrease weight by 1 lb"
+                    title="Decrease 1 lb"
+                  >
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                      <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                  </button>
+                </div>
+
+                {/* Clickable Unit Badge */}
+                <button
+                  type="button"
+                  className="unit-badge-btn"
+                  onClick={() => handleUnitChange('metric')}
+                  title="Click to switch unit to Metric (kg)"
+                >
+                  <span>lbs</span>
+                  <span className="switch-indicator">⇄ kg</span>
+                </button>
               </div>
+
               <input
                 type="range"
                 min="60"

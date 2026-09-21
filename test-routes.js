@@ -3,6 +3,11 @@ const http = require('http');
 const ROUTES = [
   '/',
   '/tools/',
+  '/guides/',
+  '/guides/astronomical-leap-years-chronological-age/',
+  '/guides/mathematics-of-loan-amortization-emi/',
+  '/guides/zero-server-in-browser-web-privacy/',
+  '/guides/understanding-who-bmi-standards/',
   '/about/',
   '/contact/',
   '/privacy/',

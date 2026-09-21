@@ -1,26 +1,23 @@
-'use client';
-
-import React, { useState } from 'react';
+import React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
-import { useToast } from '@/components/ui/Toast';
+import ContactForm from '@/components/contact/ContactForm';
+
+export const metadata: Metadata = {
+  title: 'Contact Us & Support',
+  description:
+    'Have feedback, suggestions for a new tool, or need technical support? Contact the OmniTools team directly. We review all incoming community inquiries.',
+  alternates: {
+    canonical: '/contact/'
+  },
+  openGraph: {
+    title: 'Contact Us & Support',
+    description: 'Direct communication channels and support form for the OmniTools platform.',
+    url: '/contact/'
+  }
+};
 
 export default function ContactPage() {
-  const { showToast } = useToast();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [topic, setTopic] = useState('feature');
-  const [message, setMessage] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitted(true);
-    showToast('Thank you! Your message has been successfully received.', 'success');
-    setName('');
-    setEmail('');
-    setMessage('');
-  };
-
   return (
     <div className="container section-py-sm" style={{ maxWidth: '960px' }}>
       <nav className="breadcrumb-nav" aria-label="Breadcrumb">
@@ -91,88 +88,12 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* Contact Form */}
+        {/* Contact Form Card */}
         <div className="card" style={{ padding: '2.25rem' }}>
           <h2 style={{ fontSize: '1.35rem', color: 'var(--text-white)', marginBottom: '1.25rem' }}>
             Send Us a Direct Message
           </h2>
-
-          {isSubmitted ? (
-            <div style={{ padding: '2rem', textAlign: 'center', background: 'rgba(0, 255, 156, 0.06)', border: '1px solid var(--accent-primary)', borderRadius: 'var(--radius-md)' }}>
-              <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="var(--accent-primary)" strokeWidth="2.5" style={{ margin: '0 auto 1rem' }}>
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-              </svg>
-              <h3 style={{ fontSize: '1.2rem', color: 'var(--text-white)', marginBottom: '0.5rem' }}>Message Dispatched!</h3>
-              <p style={{ color: 'var(--text-body)', fontSize: '0.9rem', marginBottom: '1.25rem' }}>
-                Thank you for your feedback. We review all incoming suggestions and issue reports.
-              </p>
-              <button type="button" className="btn btn-sm btn-secondary" onClick={() => setIsSubmitted(false)}>
-                Send Another Inquiry
-              </button>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="contactName" className="form-label">Full Name</label>
-                <input
-                  type="text"
-                  id="contactName"
-                  className="form-input"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Your name"
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="contactEmail" className="form-label">Email Address</label>
-                <input
-                  type="email"
-                  id="contactEmail"
-                  className="form-input"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your.email@example.com"
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="contactTopic" className="form-label">Inquiry Category</label>
-                <select
-                  id="contactTopic"
-                  className="form-select"
-                  value={topic}
-                  onChange={(e) => setTopic(e.target.value)}
-                >
-                  <option value="feature">New Tool Request / Feature Suggestion</option>
-                  <option value="bug">Calculation Discrepancy / Bug Report</option>
-                  <option value="adsense">Advertising &amp; Commercial Partnerships</option>
-                  <option value="privacy">Privacy &amp; Data Rights Inquiry</option>
-                  <option value="other">General Inquiries</option>
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="contactMessage" className="form-label">Your Detailed Message</label>
-                <textarea
-                  id="contactMessage"
-                  className="form-textarea"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Please describe your suggestion, question, or issue in detail..."
-                  rows={5}
-                  required
-                />
-              </div>
-
-              <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '0.5rem' }}>
-                Submit Message
-              </button>
-            </form>
-          )}
+          <ContactForm />
         </div>
       </div>
     </div>

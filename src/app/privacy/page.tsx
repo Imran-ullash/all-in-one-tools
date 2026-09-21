@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Privacy Policy | OmniTools',
+  title: 'Privacy Policy',
   description:
     'Our strict privacy policy. Learn how OmniTools protects your confidentiality with 100% client-side, in-browser data processing and full Google AdSense, GDPR, and CCPA compliance.',
   alternates: {

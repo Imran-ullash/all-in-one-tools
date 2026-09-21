@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Disclaimer | OmniTools',
+  title: 'Legal Disclaimer',
   description:
     'Important legal disclaimers regarding the use of OmniTools online calculators, health metrics, financial estimates, and developer utilities.',
   alternates: {

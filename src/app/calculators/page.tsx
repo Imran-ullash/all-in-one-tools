@@ -2,9 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import { CATEGORIES, TOOLS, SITE_NAME, SITE_URL } from '@/data/tools';
 import AdBanner from '@/components/ads/AdBanner';
+import ToolIcon from '@/components/ui/ToolIcon';
 
 export const metadata = {
-  title: 'Online Calculators - Age, BMI, Percentage, Loan & Date Tools | OmniTools',
+  title: 'Online Calculators - Age, BMI, Percentage, Loan & Date Tools',
   description: 'Fast, accurate, and free online calculators for age, health BMI, loan EMI, percentages, and dates. 100% private in-browser calculations.',
   alternates: {
     canonical: '/calculators/'
@@ -52,7 +53,7 @@ export default function CalculatorsPage() {
               <Link key={tool.id} href={`/${tool.categorySlug}/${tool.slug}/`} className="tool-card">
                 <div className="tool-card-top">
                   <div className="tool-icon-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="4" y="2" width="16" height="20" rx="2"></rect><line x1="8" y1="6" x2="16" y2="6"></line><line x1="16" y1="14" x2="16" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
+                    <ToolIcon slug={tool.slug} categorySlug={tool.categorySlug} size={20} />
                   </div>
                   <span className="tool-badge">{tool.badge}</span>
                 </div>

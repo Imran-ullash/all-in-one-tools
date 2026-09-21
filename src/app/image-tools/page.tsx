@@ -2,9 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import { CATEGORIES, TOOLS, SITE_NAME, SITE_URL } from '@/data/tools';
 import AdBanner from '@/components/ads/AdBanner';
+import ToolIcon from '@/components/ui/ToolIcon';
 
 export const metadata = {
-  title: 'Online Image Tools - Compressor, Resizer & Format Converters | OmniTools',
+  title: 'Online Image Tools - Compressor, Resizer & Format Converters',
   description: 'Compress, resize, and convert JPG and PNG images 100% in your browser. Fast client-side image processing with zero privacy risk.',
   alternates: {
     canonical: '/image-tools/'
@@ -52,7 +53,7 @@ export default function ImageToolsPage() {
               <Link key={tool.id} href={`/${tool.categorySlug}/${tool.slug}/`} className="tool-card">
                 <div className="tool-card-top">
                   <div className="tool-icon-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                    <ToolIcon slug={tool.slug} categorySlug={tool.categorySlug} size={20} />
                   </div>
                   <span className="tool-badge">{tool.badge}</span>
                 </div>

@@ -2,9 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import { CATEGORIES, TOOLS, SITE_NAME, SITE_URL } from '@/data/tools';
 import AdBanner from '@/components/ads/AdBanner';
+import ToolIcon from '@/components/ui/ToolIcon';
 
 export const metadata = {
-  title: 'Developer Tools - JSON Formatter, Base64 & UUID Generator | OmniTools',
+  title: 'Developer Tools - JSON Formatter, Base64 & UUID Generator',
   description: 'Essential browser utilities for developers: JSON formatters & syntax validators, Base64 encode/decode, and RFC 4122 v4 UUID generator.',
   alternates: {
     canonical: '/developer-tools/'
@@ -52,7 +53,7 @@ export default function DeveloperToolsPage() {
               <Link key={tool.id} href={`/${tool.categorySlug}/${tool.slug}/`} className="tool-card">
                 <div className="tool-card-top">
                   <div className="tool-icon-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    <ToolIcon slug={tool.slug} categorySlug={tool.categorySlug} size={20} />
                   </div>
                   <span className="tool-badge">{tool.badge}</span>
                 </div>

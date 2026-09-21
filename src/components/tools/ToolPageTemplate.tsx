@@ -5,6 +5,7 @@ import { SITE_URL, TOOLS } from '@/data/tools';
 import ToolRenderer from './ToolRenderer';
 import FaqAccordion from '../ui/FaqAccordion';
 import AdBanner from '../ads/AdBanner';
+import ToolIcon from '../ui/ToolIcon';
 
 interface ToolPageTemplateProps {
   tool: Tool;
@@ -197,9 +198,7 @@ export default function ToolPageTemplate({ tool }: ToolPageTemplateProps) {
               <Link key={rel.id} href={`/${rel.categorySlug}/${rel.slug}/`} className="tool-card">
                 <div className="tool-card-top">
                   <div className="tool-icon-box">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                    </svg>
+                    <ToolIcon slug={rel.slug} categorySlug={rel.categorySlug} size={18} />
                   </div>
                   <span className="tool-badge">{rel.categoryName}</span>
                 </div>

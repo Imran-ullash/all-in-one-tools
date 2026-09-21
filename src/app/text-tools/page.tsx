@@ -2,9 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import { CATEGORIES, TOOLS, SITE_NAME, SITE_URL } from '@/data/tools';
 import AdBanner from '@/components/ads/AdBanner';
+import ToolIcon from '@/components/ui/ToolIcon';
 
 export const metadata = {
-  title: 'Online Text Tools - Word Counter, Case Converter & Deduplicator | OmniTools',
+  title: 'Online Text Tools - Word Counter, Case Converter & Deduplicator',
   description: 'Clean, format, count, and optimize text in real-time. Fast, in-browser word counter, character counter, case converter, and duplicate line remover.',
   alternates: {
     canonical: '/text-tools/'
@@ -52,7 +53,7 @@ export default function TextToolsPage() {
               <Link key={tool.id} href={`/${tool.categorySlug}/${tool.slug}/`} className="tool-card">
                 <div className="tool-card-top">
                   <div className="tool-icon-box">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>
+                    <ToolIcon slug={tool.slug} categorySlug={tool.categorySlug} size={20} />
                   </div>
                   <span className="tool-badge">{tool.badge}</span>
                 </div>

@@ -190,6 +190,12 @@ export default function Header() {
               Dev Tools
             </Link>
             <Link 
+              href="/guides/" 
+              className={`nav-link ${pathname.startsWith('/guides') ? 'active' : ''}`}
+            >
+              Guides
+            </Link>
+            <Link 
               href="/about/" 
               className={`nav-link ${pathname === '/about/' ? 'active' : ''}`}
             >
@@ -328,6 +334,9 @@ export default function Header() {
             </Link>
             <Link href="/developer-tools/" className="mobile-nav-link" onClick={() => setIsMobileDrawerOpen(false)}>
               Developer Tools
+            </Link>
+            <Link href="/guides/" className="mobile-nav-link" onClick={() => setIsMobileDrawerOpen(false)}>
+              Guides &amp; Insights
             </Link>
             <Link href="/about/" className="mobile-nav-link" onClick={() => setIsMobileDrawerOpen(false)}>
               About OmniTools

@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Terms of Service | OmniTools',
+  title: 'Terms of Service',
   description:
     'Comprehensive Terms of Service for using OmniTools. Review user rights, permitted usage, intellectual property, and limitations of liability.',
   alternates: {

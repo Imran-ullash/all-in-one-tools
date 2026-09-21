@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'About OmniTools - Our Mission, Team & Engineering Standards',
+  title: 'About Us - Mission, Team & Engineering Standards',
   description:
     'Learn about OmniTools, the free, privacy-first online utility platform engineered by Imran Ullash for developers, writers, students, and professionals worldwide.',
   alternates: {
