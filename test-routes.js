@@ -7,6 +7,7 @@ const ROUTES = [
   '/contact/',
   '/privacy/',
   '/terms/',
+  '/disclaimer/',
   '/calculators/',
   '/calculators/age-calculator/',
   '/calculators/bmi-calculator/',

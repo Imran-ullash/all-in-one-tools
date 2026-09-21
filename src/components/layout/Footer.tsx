@@ -57,9 +57,10 @@ export default function Footer() {
             <div className="footer-links">
               <Link href="/tools/" className="footer-link">All Tools Directory</Link>
               <Link href="/about/" className="footer-link">About OmniTools</Link>
-              <Link href="/contact/" className="footer-link">Contact & Support</Link>
+              <Link href="/contact/" className="footer-link">Contact &amp; Support</Link>
               <Link href="/privacy/" className="footer-link">Privacy Policy</Link>
               <Link href="/terms/" className="footer-link">Terms of Service</Link>
+              <Link href="/disclaimer/" className="footer-link">Legal Disclaimer</Link>
             </div>
           </div>
         </div>
@@ -67,8 +68,9 @@ export default function Footer() {
         <div className="footer-bottom">
           <div>&copy; {new Date().getFullYear()} OmniTools Platform. Built with Next.js. Free &amp; Open Client-Side Utilities.</div>
           <div className="footer-legal-links">
-            <Link href="/privacy/" className="footer-link">Privacy Policy</Link>
-            <Link href="/terms/" className="footer-link">Terms of Service</Link>
+            <Link href="/privacy/" className="footer-link">Privacy</Link>
+            <Link href="/terms/" className="footer-link">Terms</Link>
+            <Link href="/disclaimer/" className="footer-link">Disclaimer</Link>
             <Link href="/contact/" className="footer-link">Contact</Link>
           </div>
         </div>

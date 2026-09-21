@@ -20,8 +20,10 @@ export interface Tool {
   badge: string;
   keywords: string[];
   howToUse: ToolStep[];
+  features?: string[];
   howItWorks: string;
   example: string;
+  tips?: string[];
   faqs: ToolFaq[];
   related: string[];
 }
